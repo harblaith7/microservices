@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
+import { BadRequestError } from '../errors/bad-request';
 import { RequestValidationError } from '../errors/request-validation-error';
 import { User } from "../models/user"
 
@@ -30,7 +31,7 @@ router.post('/api/users/signup', [
     });
 
     if(existingUser) {
-        return res.send({})
+        throw new BadRequestError('Email in use')
     }
 
     const user = User.build({
