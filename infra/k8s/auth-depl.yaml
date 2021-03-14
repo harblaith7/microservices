@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: image-repo/auth
+          image: imagerepo/auth
 
 ---
 
