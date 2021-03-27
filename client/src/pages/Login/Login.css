@@ -91,3 +91,8 @@
 .Login__right--container input:focus {
     outline: none
 }
+
+.Login__right p span {
+    color: rgb(14, 131, 131);
+    cursor: pointer;
+}
