@@ -4,8 +4,9 @@ import 'express-async-errors'
 import cookieSession from "cookie-session"
 import { errorHandler, NotFoundError, currentUser } from '@shopigram/common';
 import { createImageRouter } from './routes/new';
-import { uploadImageRouter } from './routes/upload';
-
+import { getPostRouter } from './routes/get-post';
+import { getPostsRouter } from './routes/get-posts'
+import { updatePostRouter } from './routes/update-post';
 
 const app = express();
 app.set('trust proxy', true)
@@ -20,7 +21,9 @@ app.use(
 )
 app.use(currentUser)
 app.use(createImageRouter)
-app.use(uploadImageRouter)
+app.use(getPostRouter)
+app.use(getPostsRouter)
+app.use(updatePostRouter)
 
 app.all("*", () => {
     throw new NotFoundError()

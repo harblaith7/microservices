@@ -2,8 +2,13 @@ import mongoose from "mongoose"
 import { app } from "./app"
 
 const main = async () => {
+
+    if(!process.env.MONGO_URI){
+        throw new Error("Mongo uri not defined")
+    }
+
     try {
-        await mongoose.connect("mongodb://auth-mongo-srv:27017/auth", {
+        await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
@@ -13,7 +18,7 @@ const main = async () => {
     }
 
     app.listen(3000, () => {
-        console.log('Listening on port 3000!!!')
+        console.log('Listening on port 3000!!!!')
     })
 }
 

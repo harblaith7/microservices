@@ -1,6 +1,7 @@
 import { requireAuth, validateRequest } from "@shopigram/common";
 import express, { Request, Response } from "express";
 import { body } from "express-validator"
+import { Post } from "../models/post";
 
 const router = express.Router();
 
@@ -12,18 +13,25 @@ router.post(
           .not()
           .isEmpty()
           .withMessage('Title is required'),
-        body('post')
+        body('body')
             .isLength({
                 min: 20
             })
             .withMessage('Post must be greater than 20 characters'),
     ],
     validateRequest,
-    (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
+        const {title, body} = req.body;
 
-    res.json({
-        "safasfas": "sfsafff"
-    });
+        const post = Post.build({
+            title,
+            body,
+            userId: req.currentUser!.id
+        });
+
+        await post.save()
+
+        res.status(201).send(post)
 });
 
 export { router as createImageRouter }

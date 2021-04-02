@@ -5,10 +5,10 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  local:
-    push: false
+  googleCloudBuild:
+    projectId: shopigram
   artifacts:
-    - image: imagerepo/auth
+    - image: us.gcr.io/shopigram/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -16,11 +16,21 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: laithharb/client
+    - image: us.gcr.io/shopigram/client
       context: client
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '**/*.js'
+          - src: '**/*.tsx'
+            dest: .
+          - src: '**/*.css'
+            dest: .
+    - image: us.gcr.io/shopigram/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
             dest: .

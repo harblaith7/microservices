@@ -26,6 +26,8 @@ function App() {
           jwt
         }
       });
+      if(jwt) axios.defaults.headers.common['jwt'] = jwt;
+      else delete axios.defaults.headers.common['jwt']
       if(response.data.currentUser) {
         history.push("/dashboard")
       } 

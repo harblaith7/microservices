@@ -1,7 +1,6 @@
 import express from 'express';
 import JWT from 'jsonwebtoken';
-import { currentUser } from '../middlewares/current-user'
-import { requireAuth } from '../middlewares/require-auth';
+import { currentUser, requireAuth } from '@shopigram/common'
 const router = express.Router();
 
 router.get('/api/users/currentuser', currentUser, requireAuth, (req, res) => {

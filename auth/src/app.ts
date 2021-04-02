@@ -5,8 +5,7 @@ import cookieSession from "cookie-session"
 
 
 import { signupRouter } from "./routes/signup"
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+import { errorHandler, NotFoundError } from '@shopigram/common';
 import { signinRouter } from './routes/signin';
 import { currentUserRouter } from './routes/current-user';
 import { signoutRouter } from './routes/signout';
@@ -16,6 +15,8 @@ app.set('trust proxy', true)
 app.use(json());
 app.use(
     cookieSession({
+        name: 'session',
+        keys: ['jwt'],
         signed: false,
         secure: process.env.NODE_ENV !== 'test'
     })

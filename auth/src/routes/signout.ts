@@ -1,5 +1,4 @@
 import express from 'express';
-import JWT from 'jsonwebtoken';
 
 const router = express.Router();
 

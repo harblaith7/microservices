@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { BadRequestError } from '../errors/bad-request';
-import { validateRequest } from "../middlewares/validate-request"
+import { BadRequestError, validateRequest } from '@shopigram/common';
 import { User } from "../models/user"
 import JWT from "jsonwebtoken"
 
@@ -22,8 +21,6 @@ router.post('/api/users/signup', [
 validateRequest, 
 async (req: Request, res: Response) => {
 
-    console.log("logger")
-
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({
@@ -35,8 +32,6 @@ async (req: Request, res: Response) => {
         throw new BadRequestError('Email in use')
     }
 
-    console.log("logger 2")
-
     const user = User.build({
         email,
         password
@@ -44,18 +39,16 @@ async (req: Request, res: Response) => {
 
     await user.save();
 
-    console.log("logger 3", process.env.JWT_KEY)
-
     const userJwt = JWT.sign({
         id: user.id,
         email: user.email
     }, process.env.JWT_KEY!);
 
-    console.log("logger 4")
+    req.session = {
+        jwt: userJwt,
+    } 
 
-    req.session!.jwt = userJwt;
-
-    res.status(201).send(user)
+    res.status(201).append("cookie", userJwt).send(user)
 
 });
 
