@@ -1,7 +1,9 @@
 import { requireAuth, validateRequest } from "@shopigram/common";
 import express, { Request, Response } from "express";
 import { body } from "express-validator"
+import { PostCreatedPublisher } from "../events/publishers/post-created-publisher";
 import { Post } from "../models/post";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -29,7 +31,14 @@ router.post(
             userId: req.currentUser!.id
         });
 
-        await post.save()
+        await post.save();
+
+        new PostCreatedPublisher(natsWrapper.client).publish({
+            id: post.id,
+            title: post.title,
+            body: post.body,
+            userId: req.currentUser!.id
+        })
 
         res.status(201).send(post)
 });

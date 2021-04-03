@@ -2,6 +2,8 @@ import { BadRequestError, CustomError, NotAuthorizedError, NotFoundError, requir
 import express, { Request, Response } from "express";
 import { Post } from "../models/post";
 import { body } from "express-validator"
+import { PostUpdatedPublisher } from '../events/publishers/post-updated-publisher'
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -39,7 +41,14 @@ router.put(
         body
     })
 
-    post.save()
+    await post.save();
+
+    new PostUpdatedPublisher(natsWrapper.client).publish({
+        id: post.id,
+        title: post.title,
+        body: post.body,
+        userId: post.userId
+    })
 
     res.send(post)
 });
