@@ -30,4 +30,21 @@ Outside communcation is done through an **Ingress Ngnix** service that forwards 
 
 Communication between services are done **asynchronously** through the use of an **event bus** known as **NATS Streaming Server**. Apache Kafka was my original option, but it was too complex to understand and implement into this introductory project. I do intend to learn it in the future, however. 
 
+
+## Authentication
+
+Authentication is a very tricky thing to accomplish in a microservice architecture. This is because all of the authentication logic is housed in the auth service, seperate from the other services. However, knowing whether a user is authenticated or not is very important for any service that contains protected routes.
+
+One approach to communicate authentication information between services is for a service to **synchronously** communucate with the auth service.
+
+<img width="843" alt="Screen Shot 2021-04-04 at 9 30 42 AM" src="https://user-images.githubusercontent.com/35265876/113510346-72ab6e00-9528-11eb-9975-35c3245ed4d2.png">
+
+However, this introduces dependencies between multiple services and the auth service. This is not ideal because if the auth service goes down, multiple routes in other services will not be functional. 
+
+
+## Error Handling
+
+
+## Service Communication
+
 <img width="1084" alt="Screen Shot 2021-04-04 at 8 36 50 AM" src="https://user-images.githubusercontent.com/35265876/113508971-1c86fc80-9521-11eb-98c5-bc45151ac148.png">
