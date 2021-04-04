@@ -42,12 +42,17 @@ One approach to communicate authentication information between services is for a
 
 However, this introduces dependencies between multiple services and the auth service. This is not ideal because if the auth service goes down, multiple routes within other services will not be functional. 
 
-A better approach is to teach each service how to determine if a user is authenticated or not. In our application, an authenticated user will return a **json web token** in each request header. Thus, each service will have the ability to verify the token and extract the payload.
+A better approach is to teach each service how to determine if a user is authenticated or not. In our application, an authenticated user will return a **json web token** in each request header. Each service should have the ability to get the JWT, verify it and extract the payload.
 
 However, the generation of the JWT, and other functionality such as signing in, signing up, and logging out can only be done in the auth service.
 
 ## Error Handling
 
+One of the perks of microservices is that they allow you to use multiple different languages and frameworks across multiple services. This however can come with its own drawbacks. 
+
+For instance, different libraries or frameworks can return different error structures. This is problematic, as we don't want our React App to have to figure out how to parse the structure of each error it gets thrown its way.
+
+To fix this, I created a common library that will be used by each service and will ensure a consistent error structure.
 
 ## Service Communication
 
