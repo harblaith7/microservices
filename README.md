@@ -20,3 +20,8 @@ This is a small blogging app that I decided to build with a microservice archite
 - Docker
 - Kubernetes
 - GCP
+- NATS Streaming Server (Event Bus)
+
+## App Architecture
+
+<img width="1084" alt="Screen Shot 2021-04-04 at 8 36 50 AM" src="https://user-images.githubusercontent.com/35265876/113508971-1c86fc80-9521-11eb-98c5-bc45151ac148.png">
