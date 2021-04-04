@@ -30,6 +30,7 @@ Outside communcation is done through an **Ingress Ngnix** service that forwards 
 
 Communication between services are done **asynchronously** through the use of an **event bus** known as **NATS Streaming Server**. Apache Kafka was my original option, but it was too complex to understand and implement into this introductory project. I do intend to learn it in the future, however. 
 
+<img width="1084" alt="Screen Shot 2021-04-04 at 8 36 50 AM" src="https://user-images.githubusercontent.com/35265876/113508971-1c86fc80-9521-11eb-98c5-bc45151ac148.png">
 
 ## Authentication
 
@@ -47,4 +48,4 @@ However, this introduces dependencies between multiple services and the auth ser
 
 ## Service Communication
 
-<img width="1084" alt="Screen Shot 2021-04-04 at 8 36 50 AM" src="https://user-images.githubusercontent.com/35265876/113508971-1c86fc80-9521-11eb-98c5-bc45151ac148.png">
+
