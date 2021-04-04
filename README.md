@@ -40,8 +40,11 @@ One approach to communicate authentication information between services is for a
 
 <img width="843" alt="Screen Shot 2021-04-04 at 9 30 42 AM" src="https://user-images.githubusercontent.com/35265876/113510346-72ab6e00-9528-11eb-9975-35c3245ed4d2.png">
 
-However, this introduces dependencies between multiple services and the auth service. This is not ideal because if the auth service goes down, multiple routes in other services will not be functional. 
+However, this introduces dependencies between multiple services and the auth service. This is not ideal because if the auth service goes down, multiple routes within other services will not be functional. 
 
+A better approach is to teach each service how to determine if a user is authenticated or not. In our application, an authenticated user will return a **json web token** in each request header. Thus, each service will have the ability to verify the token and extract the payload.
+
+However, the generation of the JWT, and other functionality such as signing in, signing up, and logging out can only be done in the auth service.
 
 ## Error Handling
 
