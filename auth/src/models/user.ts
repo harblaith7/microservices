@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Password } from '../services/password';
 
 interface UserAttrs {
-    email: string;
+    username: string;
     password: string
 }
 
@@ -11,12 +11,12 @@ interface UserModal extends mongoose.Model<UserDoc> {
 }
 
 interface UserDoc extends mongoose.Document {
-    email: string;
+    username: string;
     password: string;
 }
 
 const userSchema = new mongoose.Schema({
-    email: {
+    username: {
         type: String,
         required: true
     },

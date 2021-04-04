@@ -8,9 +8,10 @@ import JWT from "jsonwebtoken"
 const router = express.Router();
 
 router.post('/api/users/signin', [
-    body('email')
-        .isEmail()
-        .withMessage('Email must be valid'),
+    body('username')
+        .trim()
+        .notEmpty()
+        .withMessage('Username must be valid'),
     body('password')
         .trim()
         .notEmpty()
@@ -19,10 +20,10 @@ router.post('/api/users/signin', [
 validateRequest,
 async (req: Request, res: Response) => {
 
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     const exisitingUser = await User.findOne({
-        email
+        username
     })
 
     if(!exisitingUser) {
@@ -37,7 +38,7 @@ async (req: Request, res: Response) => {
 
     const userJwt = JWT.sign({
         id: exisitingUser.id,
-        email: exisitingUser.email
+        username: exisitingUser.username
     }, process.env.JWT_KEY!);
 
     req.session!.jwt = userJwt;

@@ -9,7 +9,7 @@ type Errors = {
 
 function RightLogin() {
 
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showCreate, setShowCreate] = useState(true)
     const [errors, setErrors] = useState<Errors>([])
@@ -18,7 +18,7 @@ function RightLogin() {
     const handleClick = async (e: any) => {
         try {
             const response = await axios.post('/api/users/signup', {
-                email,
+                username,
                 password
             }, {
                 headers: {
@@ -41,7 +41,7 @@ function RightLogin() {
     const login = async () => {
         try {
             const response = await axios.post('/api/users/signin', {
-                email,
+                username,
                 password
             }, {
                 headers: {
@@ -68,11 +68,11 @@ function RightLogin() {
                     <div className="Login__right--container">
                         <h2>Create an Account</h2>
                         <input 
-                            value={email} 
+                            value={username} 
                             onChange={(e) => {
-                                setEmail(e.target.value)
+                                setUsername(e.target.value)
                             }} 
-                            placeholder="email"
+                            placeholder="username"
                         />
                         <input 
                             value={password} 
@@ -80,6 +80,7 @@ function RightLogin() {
                                 setPassword(e.target.value)
                             }} 
                             placeholder="password"
+                            type="password"
                         />
                         {errors[0] && (
                             <h4>Oooops.... {errors[0].message}</h4>
@@ -91,9 +92,9 @@ function RightLogin() {
                     <div className="Login__right--container">
                         <h2>Sign In</h2>
                         <input 
-                            value={email} 
+                            value={username} 
                             onChange={(e) => {
-                                setEmail(e.target.value)
+                                setUsername(e.target.value)
                             }} 
                             placeholder="email"
                         />

@@ -7,9 +7,12 @@ import JWT from "jsonwebtoken"
 const router = express.Router();
 
 router.post('/api/users/signup', [
-    body('email')
-        .isEmail()
-        .withMessage('Email must be valid'),
+    body('username')
+        .isLength({
+            min: 4,
+            max: 40
+        })
+        .withMessage('Username must be between 4 and 40 characters'),
     body('password')
         .trim()
         .isLength({
@@ -21,10 +24,10 @@ router.post('/api/users/signup', [
 validateRequest, 
 async (req: Request, res: Response) => {
 
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     const existingUser = await User.findOne({
-        email
+        username
     });
     
 
@@ -33,7 +36,7 @@ async (req: Request, res: Response) => {
     }
 
     const user = User.build({
-        email,
+        username,
         password
     })
 
@@ -41,7 +44,7 @@ async (req: Request, res: Response) => {
 
     const userJwt = JWT.sign({
         id: user.id,
-        email: user.email
+        username: user.username
     }, process.env.JWT_KEY!);
 
     req.session = {

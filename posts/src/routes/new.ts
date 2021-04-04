@@ -37,7 +37,8 @@ router.post(
             id: post.id,
             title: post.title,
             body: post.body,
-            userId: req.currentUser!.id
+            userId: req.currentUser!.id,
+            username: req.currentUser!.username
         })
 
         res.status(201).send(post)

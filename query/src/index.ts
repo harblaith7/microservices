@@ -1,6 +1,8 @@
 import mongoose from "mongoose"
 import { app } from "./app"
 import { natsWrapper } from "./nats-wrapper"
+import { PostCreatedListner } from "./events/listeners/post-created-listener"
+import { CommentCreatedListener } from "./events/listeners/comment-created-listener"
 
 const main = async () => {
     if(!process.env.MONGO_URI){
@@ -14,6 +16,9 @@ const main = async () => {
         process.on('SIGINT', () => natsWrapper.client.close())
         process.on('SIGTERM', () => natsWrapper.client.close())
 
+        new PostCreatedListner(natsWrapper.client).listen()
+        new CommentCreatedListener(natsWrapper.client).listen()
+
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
@@ -24,10 +29,9 @@ const main = async () => {
     }
 
     app.listen(3000, () => {
-        console.log('Listening on port 3000!!')
+        console.log('Listening on port 3000')
     })
 }
-
 
 main()
 
