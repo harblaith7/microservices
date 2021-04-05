@@ -56,4 +56,6 @@ To fix this, I created a common library that will be used by each service and wi
 
 ## Service Communication
 
+There are two man ways communication between services can occur; synchronously or asynchronously. Synchronously communication occurs when one service communicates directly with another via an HTTP request. This is a simple solution, but it may lead to many issues. When services communicate with one another, it can lead to dependencies between services. Thus if one service goes down, certain routes in other services might become comprised.
 
+Asynchronous communication solves this issue. Communication between services is down via events that are emitted by the publisher and consumed by the subscribers. This can be done with the use of an event bus like Kafka, RabbitMQ, or NATS. This ensures that there is no dependencies across services.
